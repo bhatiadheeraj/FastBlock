@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a href="#" class="navbar-brand">
-                <img src="../assets/project-launch.png" height="58" alt="CoolBrand">
+                <img src="../assets/rocket-dynamic-premium.png" height="88" alt="CoolBrand">
             </a>
             <h1>FastBlock</h1>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

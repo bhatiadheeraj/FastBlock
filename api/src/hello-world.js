@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 var cors = require('cors');
+path = require('path');
 
 const app = express();
 
@@ -71,8 +72,17 @@ app.post('/contractadd', (req, res) => {
         stream.write("}\n");
         stream.end();
       });
-    
-    res.send("GOt it bro");
+      
+      res.setHeader('Content-type', "application/octet-stream");
+
+      res.setHeader('Content-disposition', 'attachment; filename='+Filename);
+
+      const data = fs.readFileSync('fileGen/'+Filename, 'utf8');
+
+      res.send(data);
+
+    //   res.send(p);
+    // res.send("GOt it bro");
 });
 
 

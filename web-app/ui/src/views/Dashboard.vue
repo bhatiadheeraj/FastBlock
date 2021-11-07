@@ -5,8 +5,8 @@
             <div class="col-sm"></div>
             <div class="col-sm">
                 <br>
-                <div style="text-align: center;"><img height="250" src="../assets/puzzle-dynamic-premium.png"></div>
-                
+                <div v-if="this.state != 'DOWNLOAD'" style="text-align: center;"><img height="250" src="../assets/puzzle-dynamic-premium.png"></div>
+                <div v-if="this.state == 'DOWNLOAD'" style="text-align: center;"><img height="250" src="../assets/folder-dynamic-premium.png"></div>
                 <div v-if="this.state =='NAME_SETUP'">
                     <div class="alert alert-success" role="alert">
                         <h4 class="alert-heading">Welcome!</h4>
@@ -15,6 +15,17 @@
                     <div class="input-group input-group-lg">
                         <input type="text" class="form-control" v-model="ContractName" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
                     </div>
+                </div>
+                <div v-else></div>
+
+                <div v-if="this.state == 'DOWNLOAD'" style="text-align: center;">
+                        <!-- {{fileContent}} -->
+                        <button type="button" @click="downloadFile" class="btn btn-success btn-lg">Download Contract</button>
+                        <br>
+                        <br>
+                        <hr>
+                        <button type="button" class="btn btn-primary btn-lg">Deploy Contract</button>
+                        <p>Deploys on Ropstein</p>
                 </div>
                 <div v-else></div>
 
@@ -53,7 +64,7 @@
                 <br>
                 <div>
                     <ul>
-                        <li><button type="button" @click="changeState" class="btn btn-secondary btn-lg">NEXT</button></li>
+                        <li v-if="nextbtn"><button type="button" @click="changeState" class="btn btn-secondary btn-lg">NEXT</button></li>
                         <li v-if="addbutton">&nbsp;<button type="button" @click="addField" class="btn btn-success btn-lg"> ADD FIELD</button></li>
                     </ul>
                 </div>
@@ -82,6 +93,8 @@ export default {
         state: "NAME_SETUP",
         dataobject :{},
         addbutton: false,
+        nextbtn:true,
+        fileContent: "",
     }
  },
  methods : {
@@ -95,10 +108,15 @@ export default {
          }
          if(this.state == 'OBJECT_ADDER') {
              axios.post('http://localhost:8000/contractadd', {"data" : this.dataobject, "name": this.ContractName},{headers: {
-        'Content-Type': 'application/json'
-    }})
-                .then((res)=> console.log (res.body))
-                .catch((error)=> console.log(error));
+            'Content-Type': 'application/json'
+            }})
+                .then((res)=> {
+                    console.log(res.data);
+                    this.state = "DOWNLOAD";
+                    this.addbutton = false;
+                    this.nextbtn = false;
+                    this.setDownload(res.data);
+                }).catch((error)=> console.log(error));
         }
      },
      setDOIOBJ() {
@@ -118,6 +136,23 @@ export default {
          }
          console.log(this.dataobject);
      },
+     setDownload(data) {
+         this.fileContent = data;
+         console.log(data);
+     },
+     downloadFile() {
+            var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.fileContent));
+    element.setAttribute('download', this.ContractName+'.sol');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+     },
+
      addField() {
         let count = Object.keys(this.dataobject).length + 1;
         console.log(count); 
