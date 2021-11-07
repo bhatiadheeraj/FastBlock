@@ -25,7 +25,7 @@
                 <div v-if="this.state =='NAME_SETUP'">
                     <div class="alert alert-success" role="alert">
                         <h4 class="alert-heading">Welcome!</h4>
-                        <p>Let's begin your Project and give it a name</p>
+                        <p>Let's begin creating your Smart Contract and give it a name</p>
                     </div>
                     <div class="input-group input-group-lg">
                         <input type="text" class="form-control" v-model="ContractName" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
@@ -126,7 +126,7 @@ export default {
         }
      },
      setobj: function(data) {
-         if(data =='DOI') this.setDOIOBJ;
+         if(data =='doi') this.setDOIOBJ;
          if(data =='ims') {
              this.dataobject = {
              input1 : {
