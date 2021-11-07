@@ -77,7 +77,7 @@ app.post('/contractadd', (req, res) => {
 
       res.setHeader('Content-disposition', 'attachment; filename='+Filename);
 
-      const data = fs.readFileSync('fileGen/'+Filename, 'utf8');
+      const data = fs.readFileSync(path.resolve('fileGen/'+Filename)).toString('utf8');
 
       res.send(data);
 
