@@ -51,10 +51,10 @@
 
                 <p class="text-danger">{{errorMessage}}</p>
                 <br>
-                <div style="text-align:center">
+                <div>
                     <ul>
                         <li><button type="button" @click="changeState" class="btn btn-secondary btn-lg">NEXT</button></li>
-                        <li v-if="addbutton">&nbsp;<button type="button" @click="addField" class="btn btn-success btn-lg"> ADD</button></li>
+                        <li v-if="addbutton">&nbsp;<button type="button" @click="addField" class="btn btn-success btn-lg"> ADD FIELD</button></li>
                     </ul>
                 </div>
                 <br>
@@ -68,7 +68,7 @@
 // import Nav from '../components/Nav.vue'
 // import firebase from "firebase"
 import Vue from "vue"
-
+import axios from "axios"
 
 export default {
  name:'Dashboard',
@@ -93,6 +93,13 @@ export default {
              console.log(this.state);
              this.$nextTick();
          }
+         if(this.state == 'OBJECT_ADDER') {
+             axios.post('http://localhost:8000/contractadd', {"data" : this.dataobject, "name": this.ContractName},{headers: {
+        'Content-Type': 'application/json'
+    }})
+                .then((res)=> console.log (res.body))
+                .catch((error)=> console.log(error));
+        }
      },
      setDOIOBJ() {
          this.dataobject = {
