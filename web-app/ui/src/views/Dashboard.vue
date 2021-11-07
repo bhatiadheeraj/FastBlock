@@ -2,7 +2,22 @@
     <div class="container">
         
         <div class="row">
-            <div class="col-sm"></div>
+            <div class="col-sm">
+                <div v-if="this.state=='OBJECT_ADDER'">
+                    <br>
+                    <h4>Templates</h4>
+                    <br>
+                    <ul class="list-group">
+                        <li class="list-group-item" @click="setobj('doi')">DOI</li>
+                        <br>
+                        <br>
+                        <li class="list-group-item" @click="setobj('vin')"> Vehicle Identification Number Ledger </li>
+                        <br>
+                        <br>
+                        <li class="list-group-item" @click="setobj('ims')">Image Storage Ledger</li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-sm">
                 <br>
                 <div v-if="this.state != 'DOWNLOAD'" style="text-align: center;"><img height="250" src="../assets/puzzle-dynamic-premium.png"></div>
@@ -44,20 +59,11 @@
                                     <option>STRING</option>
                                     <option>Audio</option>
                                     <option>PubLicKey</option>
+                                    <option>Image</option>
                                 </select>
                             </div>
                             <br>
                         </div>
-                        <!-- <div class="input-group">
-                            <input type="text" v-model="dataobject.input1.name" class="form-control" aria-label="Text input with dropdown button">
-                            <select v-model="dataobject.input1.type">
-                            <option disabled value="">Please select one</option>
-                            <option>PDF</option>
-                            <option>VIDEO</option>
-                            <option>STRING</option>
-                            </select>
-                           
-                        </div> -->
                 </div>
 
                 <p class="text-danger">{{errorMessage}}</p>
@@ -118,6 +124,41 @@ export default {
                     this.setDownload(res.data);
                 }).catch((error)=> console.log(error));
         }
+     },
+     setobj: function(data) {
+         if(data =='DOI') this.setDOIOBJ;
+         if(data =='ims') {
+             this.dataobject = {
+             input1 : {
+                 name : "Photo",
+                 type : "Image",
+             },
+             input2 : {
+                 name : "Captions",
+                 type : "STRING",
+             },
+             input3 : {
+                 name : "DATE",
+                 type : "STRING",
+             },
+         }
+         }
+         if(data == 'vin') {
+             this.dataobject = {
+             input1 : {
+                 name : "VIN",
+                 type : "PubLicKey",
+             },
+             input2 : {
+                 name : "Vehicle Type",
+                 type : "STRING",
+             },
+             input3 : {
+                 name : "Vehicle Registration Number COPY",
+                 type : "PDF",
+             },
+            }
+         }
      },
      setDOIOBJ() {
          this.dataobject = {
