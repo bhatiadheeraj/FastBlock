@@ -24,8 +24,8 @@
                         <br>
                         <br>
                         <hr>
-                        <button type="button" class="btn btn-primary btn-lg">Deploy Contract</button>
-                        <p>Deploys on Ropstein</p>
+                        <!-- <button type="button" class="btn btn-primary btn-lg">Connect to Contract</button>
+                        <p>Connects to Contract deployed on Ropstein</p> -->
                 </div>
                 <div v-else></div>
 
